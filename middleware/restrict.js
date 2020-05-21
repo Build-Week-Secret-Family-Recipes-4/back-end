@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs")
-const users = require("../users/users-model")
+const users = require("../database/models/users-model")
 
 function restrict() {
     return async (req, res, next) => {
