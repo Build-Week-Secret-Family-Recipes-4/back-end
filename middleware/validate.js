@@ -4,10 +4,10 @@ const users = require("../database/models/users-model")
 
 function validateRecipeId() {
     return(req, res, next) => {
-      users.getByRecipeId(req.params.id)
+      recipe.getByRecipeId(req.params.id)
       .then((recipe) => {
         if(recipe){
-          req.recipe= recipe
+          req.recipe = recipe
           next()
         } else {
           res.status(400).json({
