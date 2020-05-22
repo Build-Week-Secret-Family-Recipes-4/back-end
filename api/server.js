@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const session =  require("express-session");
 const KnexSessionStore = require("connect-session-knex")(session);
 
+const restrict = require("../middleware/restrict");
 const authRouter = require("../routers/auth-router");
 const recipesRouter = require("../routers/recipes-router");
 const usersRouter = require("../routers/users-router");
@@ -30,7 +31,7 @@ server.use(session({
 }));
 
 server.use("/auth", authRouter);
-server.use("/recipes", recipesRouter);
+server.use("/recipes", restrict, recipesRouter);
 server.use("/users", usersRouter);
 
 server.use((err, req, res, next) => {
