@@ -34,6 +34,12 @@ server.use("/auth", authRouter);
 server.use("/recipes", restrict, recipesRouter);
 server.use("/users", usersRouter);
 
+server.get("/", (req, res) => {
+	res.json({
+		message: "Welcome to our API",
+	})
+})
+
 server.use((err, req, res, next) => {
     console.log(err)
     res.status(500).json({
