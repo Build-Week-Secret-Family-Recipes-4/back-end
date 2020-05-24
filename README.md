@@ -17,3 +17,15 @@ email and username must be different everytime you register
 Login requires : 
 - username
 - login 
+
+ENDPOINTS: 
+
+Homepage https://secret-recipe-cookbook.herokuapp.com/
+
+Registration https://secret-recipe-cookbook.herokuapp.com/auth/register
+
+Login https://secret-recipe-cookbook.herokuapp.com/auth/login
+
+Recipes https://secret-recipe-cookbook.herokuapp.com/recipes
+
+User https://secret-recipe-cookbook.herokuapp.com/users
