@@ -37,4 +37,18 @@ describe("auth integration tests", () => {
        expect(res.statusCode).toBe(409)
        
     })
+
+    it("POST /login SHOULD SUCCEED", async () => {
+        const data = {username: "bobthebuilder", password: "passwordbuild"}
+        const res = await supertest(server).post("/auth/login").send(data)
+        expect(res.statusCode).toBe(200)
+        expect(res.type).toBe("application/json")
+    })
+
+    it("POST /login SHOULD FAIL", async () => {
+        const data = {username: "bobbuilder", password: "passwordbuild"}
+        const res = await supertest(server).post("/auth/login").send(data)
+        expect(res.statusCode).toBe(401)
+        expect(res.type).toBe("application/json")
+    })
 })
