@@ -12,17 +12,18 @@ function restrict() {
 				return res.status(401).json(authError)
 			}
 
-			jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+		 	jwt.verify(token, process.env.JWT_SECRET, (err, decodedPayload) => {
 				if(err) { 
 					return res.status(401).json(authError)
 				} 
-				req.token = decoded
+				req.token = decodedPayload 
 				next()
 			})
 		} catch(err) {
 			next(err)
 		}
 	}
-};
+}
+
 
 module.exports = restrict

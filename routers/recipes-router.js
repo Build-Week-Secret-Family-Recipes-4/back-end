@@ -1,11 +1,12 @@
 const express = require("express")
 const recipes = require("../database/models/recipes-model")
 const {validateRecipeId} = require("../middleware/validate")
+const restrict = require("../middleware/restrict");
 
 const router = express.Router()
 
 
-router.get('/', (req, res, next) => {
+router.get('/', restrict(), (req, res, next) => {
     recipes.getRecipes()
     .then(recipes => {
         res.json(recipes);

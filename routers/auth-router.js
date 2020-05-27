@@ -2,7 +2,6 @@ const express = require("express");
 const users = require("../database/models/users-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const restrict = require("../middleware/restrict")
 
 
 const router = express.Router()
@@ -40,7 +39,6 @@ router.post('/register', async (req, res, next) => {
       }
       const tokenPayload = {
         userId: user.id,
-        username: user.username,
       }
       res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
       res.json({
