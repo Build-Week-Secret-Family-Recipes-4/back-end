@@ -1,11 +1,11 @@
 const express = require("express");
 const users = require("../database/models/users-model");
 const {validateUserId, validateUser} = require("../middleware/validate")
-const restrict  = require("../middleware/restrict")
+
 
 const router = express.Router()
 
-router.get("/", restrict, async (req, res, next) => {
+router.get("/",  async (req, res, next) => {
     try{
         res.json(await users.find())
     } catch(err) {
