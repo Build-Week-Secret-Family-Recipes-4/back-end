@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 
-//const restrict = require("../middleware/restrict");
+const restrict = require("../middleware/restrict");
 const authRouter = require("../routers/auth-router");
 const recipesRouter = require("../routers/recipes-router");
 const usersRouter = require("../routers/users-router");
@@ -19,8 +19,8 @@ server.use(express.json());
 server.use(cookieParser())
 
 server.use("/auth", authRouter);
-server.use("/recipes", recipesRouter);
-server.use("/users", usersRouter);
+server.use("/recipes", restrict(), recipesRouter);
+server.use("/users", restrict(), usersRouter);
 
 server.get("/", (req, res) => {
 	res.json({
