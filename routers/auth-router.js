@@ -1,6 +1,9 @@
-const express = require("express")
-const users = require("../database/models/users-model")
+const express = require("express");
+const users = require("../database/models/users-model");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const restrict = require("../middleware/restrict")
+
 
 const router = express.Router()
 
@@ -21,40 +24,32 @@ router.post('/register', async (req, res, next) => {
   });
 
 
- router.post("/login", (req, res) => {
-    let { username, password } = req.body;
-    users.findBy({ username })
-      .first()
-      .then(user => {
-        if (user && bcrypt.compare(password, user.password)) {
-          console.log(req.session)
-          req.session.user = user;
-          res.status(200).json({ message: `Welcome back ${user.username}!` });
-        } else {
-          res.status(401).json({ message: "Invalid Credentials" });
-        }
-      })
-      .catch(error => {
-        res.status(500).json(error);
-      });
-  });
-
-  router.get("/logout", (req, res) => {
-    if(req.session) {
-      req.session.destroy(err => {
-        if(err) {
-          next(err)
-        } else {
-          res.status(200).json({
-            message: "logged out"
-          })
-        }
-      })
-    } else {
-      res.redirect("/login")
+  router.post("/login", async (req, res, next) => {
+    const authError = {
+      message: "Invalid Credentials",
+    }
+  
+    try {
+      const user = await users.findBy({ username: req.body.username }).first()
+      if (!user) {
+        return res.status(401).json(authError)
       }
- })
-
+      const passwordValid = await bcrypt.compare(req.body.password, user.password)
+      if (!passwordValid) {
+        return res.status(401).json(authError)
+      }
+      const tokenPayload = {
+        userId: user.id,
+        username: user.username,
+      }
+      res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
+      res.json({
+        message: `Welcome ${user.username}!`,     
+      })
+    } catch(err) {
+      next(err)
+    }
+  })
 
 
   
