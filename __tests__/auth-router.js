@@ -3,7 +3,7 @@ const server = require("../api/server")
 const db = require("../database/dbConfig")
 
 beforeAll(async () => {
-    await db('users').truncate()
+    //await db('users').truncate()
     await db.migrate.latest()
     await db.seed.run()
   })
@@ -51,4 +51,5 @@ describe("auth integration tests", () => {
         expect(res.statusCode).toBe(401)
         expect(res.type).toBe("application/json")
     })
+
 })
