@@ -40,9 +40,10 @@ router.post('/register', async (req, res, next) => {
       const tokenPayload = {
         userId: user.id,
       }
-      res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
+      //res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
       res.json({
-        message: `Welcome ${user.username}!`,     
+        message: `Welcome ${user.username}!`, 
+        token: jwt.sign(tokenPayload, process.env.JWT_SECRET)
       })
     } catch(err) {
       next(err)
