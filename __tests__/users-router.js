@@ -2,33 +2,33 @@ const supertest = require("supertest")
 const server = require("../api/server")
 const db = require("../database/dbConfig")
 
-let token;
-
-beforeAll(done => {
-     supertest(server).post('/auth/login')
-    .send({ username: process.env.TEST_USER, 
-            password: process.env.TEST_USER_PASSWORD 
-        })
-    .end((err, res) => {
-        token = res.body.token;
-        done();
-        });
-});
-
 // let token;
 
-// beforeAll((done) => {
-//     supertest(server)
-//       .post('/auth/login')
-//       .send({
-//         username: "rachaelray1",
-//         password: "password1"
-//       })
-//       .end((err, res) => {
-//         token = res.body.token; 
+// beforeAll(done => {
+//      supertest(server).post('/auth/login')
+//     .send({ username: process.env.TEST_USER, 
+//             password: process.env.TEST_USER_PASSWORD 
+//         })
+//     .end((err, res) => {
+//         token = res.body.token;
 //         done();
-//       });
-//  });
+//         });
+// });
+
+let token;
+
+beforeAll((done) => {
+    supertest(server)
+      .post('/auth/login')
+      .send({
+        username: "rachaelray1",
+        password: "password1"
+      })
+      .end((err, res) => {
+        token = res.body.token; 
+        done();
+      });
+ });
 
 
 beforeAll(async () => {
