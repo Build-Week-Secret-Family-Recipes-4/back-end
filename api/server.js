@@ -19,7 +19,8 @@ server.use(express.json());
 server.use(cookieParser())
 
 server.use("/auth", authRouter);
-server.use("/recipes", restrict(), recipesRouter);
+//server.use("/recipes", restrict(), recipesRouter);
+server.use("/recipes", recipesRouter);
 server.use("/users", restrict(), usersRouter);
 
 server.get("/", (req, res) => {
