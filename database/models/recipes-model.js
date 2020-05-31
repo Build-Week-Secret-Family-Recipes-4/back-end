@@ -12,11 +12,13 @@ function getByRecipeId(id){
 
 async function addRecipe(recipe){
     const category_id = await db("categories").where({ name: recipe.category.toLowerCase() }).first()
+    if (recipe.category) delete recipe.category
     return db('recipes')
     .insert({ ...recipe, category_id})
     .then(ids => {
         return getByRecipeId(ids[0])
     })
+    
 }
 
 function updateRecipe(id, changes){
