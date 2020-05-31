@@ -33,7 +33,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    recipes.addRecipe(req.body)
+    recipes.addRecipe({ ...req.body, user_id: req.token.userId })
     .then(recipe => {
         res.status(201).json(recipe);
     })
