@@ -11,6 +11,7 @@ function getByRecipeId(id){
 }
 
 function addRecipe(recipe){
+    if (recipe.id) delete recipe.id
     return db('recipes')
     .insert(recipe)
     .then(ids => {
