@@ -10,16 +10,18 @@ function getByRecipeId(id){
     .first()
 }
 
-async function addRecipe(recipe){
-    const category_id = await db("categories").where({ name: recipe.category.toLowerCase() }).first()
+async function addRecipe(recipe) {
+    const category_id = await db('categories')
+      .where({ name: recipe.category.toLowerCase() })
+      .select("id")
+      .first()
     if (recipe.category) delete recipe.category
     return db('recipes')
-    .insert({ ...recipe, category_id})
-    .then(ids => {
+      .insert({ ...recipe, category_id })
+      .then((ids) => {
         return getByRecipeId(ids[0])
-    })
-    
-}
+      })
+  }
 
 function updateRecipe(id, changes){
     if (recipe.id) delete recipe.id
