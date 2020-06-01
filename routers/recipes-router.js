@@ -53,7 +53,7 @@ router.put('/:id', validateRecipeId(), (req, res, next) => {
 })
 
 router.delete('/:id', validateRecipeId(), (req, res, next) => {
-    recipes.updateRecipe(req.params.id, req.body)
+    recipes.removeRecipe(req.params.id, req.body)
     .then((recipe) => {
         res.status(200).json(recipe)
     })
