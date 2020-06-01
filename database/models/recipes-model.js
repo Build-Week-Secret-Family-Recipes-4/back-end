@@ -2,6 +2,8 @@ const db = require("../dbConfig");
 
 function getRecipes(){
     return db('recipes')
+    .join('categories', 'categories.id', 'recipes.category_id')
+    .select('recipes.*', 'categories.name')
 }
 
 function getByRecipeId(id){
